@@ -80,19 +80,17 @@ const getCeremonyNumber = async(ceremonyNumber) => {
   });
 }
 
-//working on
-//gets all winners 
-const getResults = async(winOrLose) => {
+//gets all winners
+const getResults = async() => {
   return new Promise((resolve, reject) => {
     const db = client.db(dbName)
 
-    const resultQuery = db.collection("data").find({ winner:'True'});
+    const resultQuery = { winner: 'True'};
 
-    /*db.collection("data").find(resultQuery).toArray(function(error, result){
+    db.collection("data").find(resultQuery).toArray(function(error, result){
       if(error) reject(error);
       resolve(result);
     });
-*/
   });
 }
 
@@ -107,24 +105,16 @@ const getFilmName = async(filmName) => {
       if(error) reject(error);
       resolve(result);
     });
-
   });
 }
 
-//stillworking on
+//still working on
 //lists all the movies
 const getFilmNames = async () => {
   return new Promise((resolve, reject) => {
     const db = client.db(dbName)
 
-    //const filmNamesQuery = {film: {} };
-    resolve(db.collection("data").find("film"));
-
-    // db.collection("data").find({}).toArray(function(error, result){
-    //  if(error) reject(error);
-    //   resolve(result);
-    //});
-
+    resolve(db.collection("data").distinct("film"));
   });
 }
 
@@ -134,12 +124,15 @@ const getActorName = async(actorName) => {
   return new Promise((resolve, reject) => {
     const db = client.db(dbName)
 
-    const actorQuery= {name: actorName};
+    const namesQuery = {name: actorName};
 
-    db.collection.find({name: actorName});
-
+    db.collection("data").find(namesQuery).toArray(function(error, result){
+      if(error) reject(error);
+      resolve(result);
+    });
   });
 }
+
 
 //not done yet
 //method will get years between and pull all movies in between date
