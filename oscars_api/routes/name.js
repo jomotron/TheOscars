@@ -14,25 +14,25 @@ router.get('/:filmName', async function(req, res, next) {
   res.send(filmName);
 });
 
-router.get('/films') , async function(req, res, next) {
+router.get('/films' , async function(req, res, next) {
 
   const film = await mongoDB.getFilmNames();
-
+  
   res.send(film);
-}
+});
 
-router.get('/films/winners') , async function(req, res, next) {
+router.get('/films/winners' , async function(req, res, next) {
 
   const filmWinners = await mongoDB.getResults();
 
   res.send(filmWinners);
-}
+});
 
 router.get('/:actorName', async function(req, res, next) {
   
-  const name = await mongoDB.getA(req.params.actorName)
+  const actorName = await mongoDB.getActorName(req.params.actorName);
   
-  res.send(name);
+  res.send(actorName);
 });
 
 module.exports = router;
