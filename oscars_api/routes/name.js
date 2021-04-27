@@ -14,7 +14,7 @@ router.get('/:filmName', async function(req, res, next) {
   res.send(filmName);
 });
 
-router.get('/films' , async function(req, res, next) {
+router.get('/films/all' , async function(req, res, next) {
 
   const film = await mongoDB.getFilmNames();
   
@@ -28,7 +28,7 @@ router.get('/films/winners' , async function(req, res, next) {
   res.send(filmWinners);
 });
 
-router.get('/:actorName', async function(req, res, next) {
+router.get('/actor/:actorName', async function(req, res, next) {
   
   const actorName = await mongoDB.getActorName(req.params.actorName);
   

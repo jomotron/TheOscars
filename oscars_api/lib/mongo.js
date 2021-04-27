@@ -108,8 +108,7 @@ const getFilmName = async(filmName) => {
   });
 }
 
-//still working on
-//lists all the movies
+//lists all unique movies
 const getFilmNames = async () => {
   return new Promise((resolve, reject) => {
     const db = client.db(dbName)
@@ -118,7 +117,6 @@ const getFilmNames = async () => {
   });
 }
 
-//still working on
 //lists all involvement of a specific actor/actress
 const getActorName = async(actorName) => {
   return new Promise((resolve, reject) => {
