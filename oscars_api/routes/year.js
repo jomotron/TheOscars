@@ -13,6 +13,7 @@ router.get('/film/:year', async function(req, res, next) {
   
   res.send(filmYearResults);
 });
+
 router.get('/ceremony/:year', async function(req, res, next) {
   
   const ceremonyYearResults = await mongoDB.getCeremonyYear(req.params.year);
@@ -20,6 +21,10 @@ router.get('/ceremony/:year', async function(req, res, next) {
   res.send(ceremonyYearResults);
 });
 
-
+router.get('/range/:year1/:year2', async function(req, res, next) {
+  
+  var rangeResults =  await mongoDB.rangeOfYears(req.params.year1, req.params.year2);
+  res.send(rangeResults);
+});
 
 module.exports = router;
