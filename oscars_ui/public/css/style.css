@@ -88,6 +88,9 @@ font-size: 1.7rem;
 
 h1{
     top:auto;
+    font-size:40px;
+    color: #363636;
+    margin-left:30px;
 }
 
 .label {
