@@ -55,17 +55,41 @@
             <span class="checkmark"></span>
         </label>
     </div>
-    <button class="btn-submit" type="submit">search</button>
+    <button id="submit" class="btn-submit" type="submit">search</button>
+
+    <div id="test">
+
+    </div>
 
     </div>
 
     <script src="js/yearpicker.js"></script>
     <script>
       $(document).ready(function() {
+        //TODO: Grab parameters from inputs. The endpoint: year/range/:year1/:year2
+        let endpoint = 'http://localhost:3000/year/range/1991/1992'
+
         $(".yearpicker").yearpicker({
           year: 2021,
           startYear: 1927,
           endYear: 2030
+        });
+
+
+        //Grab the restuls and appends a div with results inside test div. 
+        //Currenlty only does 50 items. 
+        //However there will be more and should be handled
+        $( "#submit" ).click(function() {
+          $.ajax({
+            url: endpoint,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function(result){
+                for(var i = 0; i < 50; i++){
+                  $('#test').append('<div>' + "Film: "+ result[0][i].film + ", " + "Year Film: "+ result[0][i].category + ", " +"Category: " + result[0][i].category + ", " + "Winner: "+ result[0][i].winner +  '</div>'); 
+                }
+            }
+          });
         });
       });
     </script>
