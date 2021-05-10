@@ -23,8 +23,16 @@ router.get('/ceremony/:year', async function(req, res, next) {
 
 router.get('/range/:year1/:year2', async function(req, res, next) {
   
-  var rangeResults =  await mongoDB.rangeOfYears(req.params.year1, req.params.year2);
+  const rangeResults =  await mongoDB.rangeOfYears(req.params.year1, req.params.year2);
   res.send(rangeResults);
 });
+
+router.get('/range', async function(req, res, next) {
+
+  const firstYear = req.query.firstYear;
+  const secondYear = req.query.secondYear;
+  const rangeResults = await mongoDB.rangeOfYears(firstYear, secondYear);
+  res.send(rangeResults);
+})
 
 module.exports = router;

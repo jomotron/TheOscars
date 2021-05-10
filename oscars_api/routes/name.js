@@ -35,4 +35,13 @@ router.get('/actor/:actorName', async function(req, res, next) {
   res.send(actorName);
 });
 
+router.get('/actors/search', async function(req, res ,next) {
+
+  const firstName = req.query.firstName;
+  const lastName = req.query.lastName;
+  const fullName = firstName + " " + lastName;
+  const actorName = await mongoDB.getActorName(fullName); 
+  res.send(actorName);
+})
+
 module.exports = router;

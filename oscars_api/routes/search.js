@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/categories', async function(req, res, next) {
+
   const categories = await mongoDB.getCategories();
   
   res.send(categories);
@@ -19,4 +20,11 @@ router.get('/categories/:categoryType', async function(req, res, next) {
   res.send(categoryResult);
 });
 
+router.get('/category', async function(req, res, next) {
+ 
+  const category = req.query.category;
+  const categoryResult = await mongoDB.getCategory(category);
+
+  res.send(categoryResult);
+});
 module.exports = router;
