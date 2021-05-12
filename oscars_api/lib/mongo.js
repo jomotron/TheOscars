@@ -143,24 +143,16 @@ const getActorName = async (actorName) => {
 
 //method will get years between and pull all movies in between date
 const rangeOfYears = async (year1, year2) => {
-  //create array of size[year2-year1+1]
-  var dateArray = new Array(year2 - year1 + 1);
-  //create query array to hold in all movie entries
-  var datesQueryArray = new Array(year2 - year1 + 1);
-  //use a loop to populate with all ints from year1 to year2
-  for (var i = 0; i < dateArray.length; i++) {
-    dateArray[i] = Number(year1) + i;
-  }
-  //use another loop to iterate through array
-  for (var i = 0; i < dateArray.length; i++) {
-    // convert contents of index from int to String
-    var temp = dateArray[i].toString();
-    //use getFilmYear method to add all movies made
-    //in that year to query array
-    datesQueryArray[i] = await getFilmYear(temp);
-    Promise.all(datesQueryArray);
-  }
-  return datesQueryArray;
+  return new Promise((resolve, reject) => {
+    const db = client.db(dbName);
+    const dateRangeQuery = { year_film: { $gte: year1, $lte: year2 } };
+    db.collection("data")
+      .find(dateRangeQuery)
+      .toArray(function (error, result) {
+        if (error) reject(error);
+        resolve(result);
+      });
+  });
 };
 
 module.exports.rangeOfYears = rangeOfYears;

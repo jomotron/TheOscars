@@ -17,25 +17,32 @@
           <h1><center>Academy Awards Winners & Nominees Finder</center></h1>
       </div>
       <div class="main">
-        
         <div class="input-group">
+          <label class="label">Search By:</label>
+          <select id="searchBy" class="input-style-1">
+            <option value="Nominee">Nominee</option>
+            <option value="FilmTitle">Film Title</option>
+            <option value="Year">Year</option>
+          </select>          
+        </div>
+        <div id="nomineeDiv" class="input-group">
           <label class="label">Nominee:</label>
-          <input class="input-style-1" type="text" name="origin" placeholder=" Enter name of actor..." required="required">
+          <input id="nominee" class="input-style-1" type="text" name="origin" placeholder=" Enter name of actor..." required="required">
         </div>
-        <div class="input-group">
+        <div id="filmTitleDiv" class="input-group">
           <label class="label">Film Title:</label>
-          <input class="input-style-1" type="text" name="origin" placeholder=" Enter name of film..." required="required">
+          <input id="filmTitle" class="input-style-1" type="text" name="origin" placeholder=" Enter name of film..." required="required">
         </div>
-        <div class="row row-space">
+        <div id="yearDiv" class="row row-space">
           <div class="col-2">
-            <label class="label">Ceremony year:</label>
-            <input type="text" class="yearpicker form-control" value="" />    
+            <label class="label">Start Date:</label>
+            <input id="startDate" type="text" class="yearpicker form-control" value="" />    
           </div>
        
           <div class="row row-space">
             <div class="col-2">
-              <label class="label">Film year:</label>
-              <input type="text" class="yearpicker form-control" value="" />    
+              <label class="label">End Date:</label>
+              <input id="endDate" type="text" class="yearpicker form-control" value="" />    
             </div>
     </div>
       </div>
@@ -57,22 +64,79 @@
     </div>
     <button id="submit" class="btn-submit" type="submit">search</button>
 
-    <div id="test">
+    <table id="resultTable">
+      <thead>
+        <tr>
+          <td>Film</td>
+          <td>Name</td>
+          <td>Year Film</td>
+          <td>Year Ceremony</td>
+          <td>Winner</td>
+        </tr>
+      </thead>
+      <tbody id="results" >
+        
+        
+      </tbody>
 
-    </div>
+    </table>
 
     </div>
 
     <script src="javascripts/yearpicker.js"></script>
+    <script src="javascripts/oscars.js"></script>
     <script>
       $(document).ready(function() {
         //TODO: Grab parameters from inputs. The endpoint: year/range/:year1/:year2
-        let endpoint = '/year/range/1991/1992'
+        //let endpoint = '/year/range/1991/1992'
+        
+        let searchValue = $("#searchBy").val();
+        switch(searchValue){
+          case "Nominee":
+            $("#nomineeDiv").show();
+            $("#filmTitleDiv").hide();
+          $("#yearDiv").hide();
+            break;
+          case "FilmTitle":
+            $("#filmTitleDiv").show();
+            $("#yearDiv").hide();
+            $("#nomineeDiv").hide();
+            break;
+            case "Year":
+          $("#yearDiv").show();
+          $("#filmTitleDiv").hide();
+          $("#nomineeDiv").hide();
+          break;
 
+            
+        }
         $(".yearpicker").yearpicker({
           year: 2021,
           startYear: 1927,
           endYear: 2030
+        });
+
+        $("#searchBy").change(function(){
+          let searchValue = $("#searchBy").val();
+        switch(searchValue){
+          case "Nominee":
+            $("#nomineeDiv").show();
+            $("#filmTitleDiv").hide();
+          $("#yearDiv").hide();
+            break;
+          case "FilmTitle":
+            $("#filmTitleDiv").show();
+            $("#yearDiv").hide();
+            $("#nomineeDiv").hide();
+            break;
+            case "Year":
+          $("#yearDiv").show();
+          $("#filmTitleDiv").hide();
+          $("#nomineeDiv").hide();
+          break;
+
+            
+        }
         });
 
 
@@ -80,16 +144,21 @@
         //Currenlty only does 50 items. 
         //However there will be more and should be handled
         $( "#submit" ).click(function() {
-          $.ajax({
-            url: endpoint,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function(result){
-                for(var i = 0; i < 50; i++){
-                  $('#test').append('<div>' + "Film: "+ result[0][i].film + ", " + "Year Film: "+ result[0][i].category + ", " +"Category: " + result[0][i].category + ", " + "Winner: "+ result[0][i].winner +  '</div>'); 
-                }
-            }
-          });
+          $('#results').empty();
+          let searchValue = $("#searchBy").val();
+
+          switch(searchValue){
+            case "Nominee":
+            displayNominees();
+            break;
+            case "FilmTitle":
+            displayFilm();
+            break;
+            case "Year":
+            displayDateRange();
+            break;
+            
+          }
         });
       });
     </script>
