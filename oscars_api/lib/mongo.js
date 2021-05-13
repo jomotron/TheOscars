@@ -105,7 +105,7 @@ const getFilmName = async (filmName) => {
   return new Promise((resolve, reject) => {
     const db = client.db(dbName);
 
-    const filmQuery = { film: filmName };
+    const filmQuery = { film: { $regex: new RegExp(filmName, "i") } };
 
     db.collection("data")
       .find(filmQuery)
@@ -130,7 +130,7 @@ const getActorName = async (actorName) => {
   return new Promise((resolve, reject) => {
     const db = client.db(dbName);
 
-    const namesQuery = { name: actorName };
+    const namesQuery = { name: { $regex: new RegExp(actorName, "i") } };
 
     db.collection("data")
       .find(namesQuery)
