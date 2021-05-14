@@ -53,6 +53,35 @@
         <tbody>
           <tr>
             <td>GET</td>
+            <td>/:ceremony/category/:category/winner</td>
+            <td>
+              Returns a singleton object of the winner for a specific ceremony
+              and specific category
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Input:</td>
+            <td>ceremony = 1 and category = actor</td>
+            <td>
+              <code>
+                [ { "_id": "60777f5f502b8d30f88a2db7", "year_film": "1927",
+                "year_ceremony": "1928", "ceremony": "1", "category": "ACTOR",
+                "name": "Emil Jannings", "film": "The Last Command", "winner":
+                "True" } ]
+              </code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>GET</td>
             <td>/ceremony/:ceremony</td>
             <td>Return list of all items of selected ceremony</td>
           </tr>
@@ -192,6 +221,34 @@
         </tbody>
       </table>
       <h4>/search</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>GET</td>
+            <td>/categories/:categoryType/winner/:year</td>
+            <td>
+              Returns a signleton object on a specific category for a specific
+              year.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Input:</td>
+            <td>categoryType = "ACTOR IN A LEADING ROLE and year" = 1992</td>
+            <td>
+              <code>
+                [ { "_id": "60777f60502b8d30f88a4978", "year_film": "1992",
+                "year_ceremony": "1993", "ceremony": "65", "category": "ACTOR IN
+                A LEADING ROLE", "name": "Al Pacino", "film": "Scent of a
+                Woman", "winner": "True" } ]
+              </code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <table class="table">
         <tbody>
           <tr>

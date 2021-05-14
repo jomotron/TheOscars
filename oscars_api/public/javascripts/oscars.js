@@ -1,5 +1,11 @@
-function displayNominees() {
-  let endpoint = "name/actor/" + $("#nominee").val();
+function displayNominees(winner) {
+  let endpoint = null;
+  if (winner === true) {
+    endpoint = "name/actor/" + $("#nominee").val() + "?winner=true";
+  } else {
+    endpoint = "name/actor/" + $("#nominee").val();
+  }
+
   $.ajax({
     url: endpoint,
     contentType: "application/json",
@@ -10,7 +16,7 @@ function displayNominees() {
         $("#results").append("<tr>");
         $("#results").append(
           "<td>" +
-            "<a onclick='routeToIMDB(\"" +
+            "<a class='film-label' onclick='routeToIMDB(\"" +
             result[i].film +
             "\")'>" +
             result[i].film +
@@ -22,13 +28,19 @@ function displayNominees() {
         $("#results").append("<td>" + result[i].year_film + "</td>");
         $("#results").append("<td>" + result[i].winner + "</td>");
         $("#results").append("</tr>");
+        $("#resultTable").show();
       }
     },
   });
 }
 
-function displayFilm() {
-  let endpoint = "name/" + $("#filmTitle").val();
+function displayFilm(winner) {
+  let endpoint = null;
+  if (winner === true) {
+    endpoint = "name/" + $("#filmTitle").val() + "?winner=true";
+  } else {
+    endpoint = "name/" + $("#filmTitle").val();
+  }
   $.ajax({
     url: endpoint,
     contentType: "application/json",
@@ -39,7 +51,7 @@ function displayFilm() {
         $("#results").append("<tr>");
         $("#results").append(
           "<td>" +
-            "<a onclick='routeToIMDB(\"" +
+            "<a class='film-label' onclick='routeToIMDB(\"" +
             result[i].film +
             "\")'>" +
             result[i].film +
@@ -51,14 +63,25 @@ function displayFilm() {
         $("#results").append("<td>" + result[i].year_film + "</td>");
         $("#results").append("<td>" + result[i].winner + "</td>");
         $("#results").append("</tr>");
+        $("#resultTable").show();
       }
     },
   });
 }
 
-function displayDateRange() {
-  let endpoint =
-    "year/range/" + $("#startDate").val() + "/" + $("#endDate").val();
+function displayDateRange(winner) {
+  let endpoint = null;
+  if (winner === true) {
+    endpoint =
+      "year/range/" +
+      $("#startDate").val() +
+      "/" +
+      $("#endDate").val() +
+      "?winner=true";
+  } else {
+    endpoint =
+      "year/range/" + $("#startDate").val() + "/" + $("#endDate").val();
+  }
   $.ajax({
     url: endpoint,
     contentType: "application/json",
@@ -69,7 +92,7 @@ function displayDateRange() {
         $("#results").append("<tr>");
         $("#results").append(
           "<td>" +
-            "<a onclick='routeToIMDB(\"" +
+            "<a class='film-label' onclick='routeToIMDB(\"" +
             result[i].film +
             "\")'>" +
             result[i].film +
@@ -81,6 +104,7 @@ function displayDateRange() {
         $("#results").append("<td>" + result[i].year_film + "</td>");
         $("#results").append("<td>" + result[i].winner + "</td>");
         $("#results").append("</tr>");
+        $("#resultTable").show();
       }
     },
   });

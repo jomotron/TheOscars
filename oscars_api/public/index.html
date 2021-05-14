@@ -19,7 +19,7 @@
       <div class="main">
         <div class="input-group">
           <label class="label">Search By:</label>
-          <select id="searchBy" class="input-style-1">
+          <select id="searchBy" class="input-style-1 one-hundred">
             <option value="Nominee">Nominee</option>
             <option value="FilmTitle">Film Title</option>
             <option value="Year">Year</option>
@@ -27,11 +27,11 @@
         </div>
         <div id="nomineeDiv" class="input-group">
           <label class="label">Nominee:</label>
-          <input id="nominee" class="input-style-1" type="text" name="origin" placeholder=" Enter name of actor..." required="required">
+          <input id="nominee" class="input-style-1 one-hundred" type="text" name="origin" placeholder=" Enter name of actor..." required="required">
         </div>
         <div id="filmTitleDiv" class="input-group">
           <label class="label">Film Title:</label>
-          <input id="filmTitle" class="input-style-1" type="text" name="origin" placeholder=" Enter name of film..." required="required">
+          <input id="filmTitle" class="input-style-1 one-hundred" type="text" name="origin" placeholder=" Enter name of film..." required="required">
         </div>
         <div id="yearDiv" class="row row-space">
           <div class="col-2">
@@ -48,30 +48,23 @@
       </div>
       <div class="p-t-5">
         <label class="label">Display searches by:</label>
-        <br>
-        <label class="checkbox-container m-r-45">Alphabetical Order
-            <input type="checkbox" name="abc-order">
-            <span class="checkmark"></span>
-        </label>
-        <label class="checkbox-container m-r-45">By year made
-            <input type="checkbox" name="year-made">
-            <span class="checkmark"></span>
-        </label>
+        
         <label class="checkbox-container">Awards won
-            <input type="checkbox" checked="checked" name="awards-won">
+            <input id="winners" type="checkbox" name="awards-won">
             <span class="checkmark"></span>
         </label>
     </div>
+    
     <button id="submit" class="btn-submit" type="submit">search</button>
 
     <table id="resultTable">
       <thead>
         <tr>
-          <td>Film</td>
-          <td>Name</td>
-          <td>Category</td>
-          <td>Year Film</td>
-          <td>Winner</td>
+          <th>Film</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Year Film</th>
+          <th>Winner</th>
         </tr>
       </thead>
       <tbody id="results" >
@@ -89,7 +82,7 @@
       $(document).ready(function() {
         //TODO: Grab parameters from inputs. The endpoint: year/range/:year1/:year2
         //let endpoint = '/year/range/1991/1992'
-        
+        $("#resultTable").hide();
         let searchValue = $("#searchBy").val();
         switch(searchValue){
           case "Nominee":
@@ -144,18 +137,19 @@
         //Currenlty only does 50 items. 
         //However there will be more and should be handled
         $( "#submit" ).click(function() {
+          var isChecked = $('#winners').is(':checked');
           $('#results').empty();
           let searchValue = $("#searchBy").val();
 
           switch(searchValue){
             case "Nominee":
-            displayNominees();
+            displayNominees(isChecked);
             break;
             case "FilmTitle":
-            displayFilm();
+            displayFilm(isChecked);
             break;
             case "Year":
-            displayDateRange();
+            displayDateRange(isChecked);
             break;
             
           }

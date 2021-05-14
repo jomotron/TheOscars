@@ -36,6 +36,25 @@ const getCategory = async (category) => {
   });
 };
 
+const getCategoryWinner = async (category, year) => {
+  return new Promise((resolve, reject) => {
+    const db = client.db(dbName);
+
+    const categoryWinnerQuery = {
+      category: { $regex: new RegExp(category, "i") },
+      winner: "True",
+      year_film: String(year),
+    };
+
+    db.collection("data")
+      .find(categoryWinnerQuery)
+      .toArray(function (error, result) {
+        if (error) reject(error);
+        resolve(result);
+      });
+  });
+};
+
 //gets all movies made during a specific year
 const getFilmYear = async (year) => {
   return new Promise((resolve, reject) => {
@@ -84,6 +103,25 @@ const getCeremonyNumber = async (ceremonyNumber) => {
   });
 };
 
+const getCeremonyNumberWinner = async (ceremonyNumber, category) => {
+  return new Promise((resolve, reject) => {
+    const db = client.db(dbName);
+
+    const ceremonyNumberWinnerQuery = {
+      ceremony: ceremonyNumber,
+      category: { $regex: new RegExp(category, "i") },
+      winner: "True",
+    };
+
+    db.collection("data")
+      .find(ceremonyNumberWinnerQuery)
+      .toArray(function (error, result) {
+        if (error) reject(error);
+        resolve(result);
+      });
+  });
+};
+
 //gets all winners
 const getResults = async () => {
   return new Promise((resolve, reject) => {
@@ -101,11 +139,18 @@ const getResults = async () => {
 };
 
 //gets specific movie results
-const getFilmName = async (filmName) => {
+const getFilmName = async (filmName, winner) => {
   return new Promise((resolve, reject) => {
     const db = client.db(dbName);
-
-    const filmQuery = { film: { $regex: new RegExp(filmName, "i") } };
+    var filmQuery = null;
+    if (winner === null) {
+      filmQuery = { film: { $regex: new RegExp(filmName, "i") } };
+    } else {
+      filmQuery = {
+        film: { $regex: new RegExp(filmName, "i") },
+        winner: { $regex: new RegExp(winner, "i") },
+      };
+    }
 
     db.collection("data")
       .find(filmQuery)
@@ -126,11 +171,19 @@ const getFilmNames = async () => {
 };
 
 //lists all involvement of a specific actor/actress
-const getActorName = async (actorName) => {
+const getActorName = async (actorName, winner) => {
   return new Promise((resolve, reject) => {
     const db = client.db(dbName);
 
-    const namesQuery = { name: { $regex: new RegExp(actorName, "i") } };
+    var namesQuery = null;
+    if (winner === null) {
+      namesQuery = { name: { $regex: new RegExp(actorName, "i") } };
+    } else {
+      namesQuery = {
+        name: { $regex: new RegExp(actorName, "i") },
+        winner: { $regex: new RegExp(winner, "i") },
+      };
+    }
 
     db.collection("data")
       .find(namesQuery)
@@ -142,10 +195,20 @@ const getActorName = async (actorName) => {
 };
 
 //method will get years between and pull all movies in between date
-const rangeOfYears = async (year1, year2) => {
+const rangeOfYears = async (year1, year2, winner) => {
   return new Promise((resolve, reject) => {
     const db = client.db(dbName);
-    const dateRangeQuery = { year_film: { $gte: year1, $lte: year2 } };
+
+    var dateRangeQuery = null;
+    if (winner === null) {
+      dateRangeQuery = { year_film: { $gte: year1, $lte: year2 } };
+    } else {
+      dateRangeQuery = {
+        year_film: { $gte: year1, $lte: year2 },
+        winner: { $regex: new RegExp(winner, "i") },
+      };
+    }
+
     db.collection("data")
       .find(dateRangeQuery)
       .toArray(function (error, result) {
@@ -162,6 +225,8 @@ module.exports.getFilmName = getFilmName;
 module.exports.getResults = getResults;
 module.exports.getCategories = getCategories;
 module.exports.getCategory = getCategory;
+module.exports.getCategoryWinner = getCategoryWinner;
 module.exports.getFilmYear = getFilmYear;
 module.exports.getCeremonyYear = getCeremonyYear;
 module.exports.getCeremonyNumber = getCeremonyNumber;
+module.exports.getCeremonyNumberWinner = getCeremonyNumberWinner;
