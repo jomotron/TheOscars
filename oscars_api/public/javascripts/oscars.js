@@ -10,11 +10,11 @@ function displayNominees() {
         $("#results").append("<tr>");
         $("#results").append(
           "<td>" +
-            "<a onclick='routeToIMDB(\"" +
+            "<span class='film-label' onclick='routeToIMDB(\"" +
             result[i].film +
             "\")'>" +
             result[i].film +
-            "</a>" +
+            "</span>" +
             "</td>"
         );
         $("#results").append("<td>" + result[i].name + "</td>");
@@ -22,6 +22,7 @@ function displayNominees() {
         $("#results").append("<td>" + result[i].year_film + "</td>");
         $("#results").append("<td>" + result[i].winner + "</td>");
         $("#results").append("</tr>");
+        $("#resultTable").show();
       }
     },
   });
@@ -39,11 +40,11 @@ function displayFilm() {
         $("#results").append("<tr>");
         $("#results").append(
           "<td>" +
-            "<a onclick='routeToIMDB(\"" +
+            "<span class='film-label' onclick='routeToIMDB(\"" +
             result[i].film +
             "\")'>" +
             result[i].film +
-            "</a>" +
+            "</span>" +
             "</td>"
         );
         $("#results").append("<td>" + result[i].name + "</td>");
@@ -51,6 +52,7 @@ function displayFilm() {
         $("#results").append("<td>" + result[i].year_film + "</td>");
         $("#results").append("<td>" + result[i].winner + "</td>");
         $("#results").append("</tr>");
+        $("#resultTable").show();
       }
     },
   });
@@ -69,11 +71,11 @@ function displayDateRange() {
         $("#results").append("<tr>");
         $("#results").append(
           "<td>" +
-            "<a onclick='routeToIMDB(\"" +
+            "<span class='film-label' onclick='routeToIMDB(\"" +
             result[i].film +
             "\")'>" +
             result[i].film +
-            "</a>" +
+            "</span>" +
             "</td>"
         );
         $("#results").append("<td>" + result[i].name + "</td>");
@@ -81,6 +83,7 @@ function displayDateRange() {
         $("#results").append("<td>" + result[i].year_film + "</td>");
         $("#results").append("<td>" + result[i].winner + "</td>");
         $("#results").append("</tr>");
+        $("#resultTable").show();
       }
     },
   });

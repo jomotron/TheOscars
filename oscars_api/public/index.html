@@ -49,16 +49,8 @@
       <div class="p-t-5">
         <label class="label">Display searches by:</label>
         <br>
-        <label class="checkbox-container m-r-45">Alphabetical Order
-            <input type="checkbox" name="abc-order">
-            <span class="checkmark"></span>
-        </label>
-        <label class="checkbox-container m-r-45">By year made
-            <input type="checkbox" name="year-made">
-            <span class="checkmark"></span>
-        </label>
         <label class="checkbox-container">Awards won
-            <input type="checkbox" checked="checked" name="awards-won">
+            <input type="checkbox" name="awards-won">
             <span class="checkmark"></span>
         </label>
     </div>
@@ -91,6 +83,8 @@
         //let endpoint = '/year/range/1991/1992'
         
         let searchValue = $("#searchBy").val();
+        $("#resultTable").hide();
+        
         switch(searchValue){
           case "Nominee":
             $("#nomineeDiv").show();
